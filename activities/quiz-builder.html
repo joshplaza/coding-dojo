@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Builder Template - Coding Dojo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            /* CUSTOMIZE THESE COLORS FOR YOUR THEME! */
+            --primary-color: #3B82F6;
+            --secondary-color: #8B5CF6;
+            --accent-color: #EC4899;
+            --dark-bg: #1F2937;
+            --light-bg: #F3F4F6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .quiz-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .quiz-title {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-number {
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--dark-bg);
+        }
+
+        .answer-option {
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .answer-option:hover {
+            border-color: var(--primary-color);
+            background: white;
+            transform: translateX(5px);
+        }
+
+        .answer-option.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .answer-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .progress-bar-container {
+            background: var(--light-bg);
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Section */
+        .results-container {
+            display: none;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .results-container.active {
+            display: block;
+        }
+
+        .result-icon {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .result-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .result-description {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .score-display {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .restart-button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .restart-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 1.25rem 3rem;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+
+        .start-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-card">
+            <!-- Start Screen -->
+            <div id="startScreen" class="start-screen">
+                <div class="quiz-header">
+                    <!-- CUSTOMIZE: Change this icon to match your theme! -->
+                    <div class="quiz-icon">🏴‍☠️</div>
+                    
+                    <!-- CUSTOMIZE: Change your quiz title -->
+                    <h1 class="quiz-title">How Much of a Pirate Are You?</h1>
+                    
+                    <!-- CUSTOMIZE: Change your quiz description -->
+                    <p class="lead">Answer 10 questions to discover your true pirate percentage! Arrr!</p>
+                </div>
+                
+                <button class="start-button" onclick="startQuiz()">
+                    <i class="fas fa-anchor me-2"></i>Start the Quiz!
+                </button>
+            </div>
+
+            <!-- Quiz Questions -->
+            <div id="quizContent" style="display: none;">
+                <!-- Progress Bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                </div>
+
+                <!-- Questions will be inserted here -->
+                <div id="questionsContainer"></div>
+
+                <!-- Navigation -->
+                <div class="nav-buttons">
+                    <button class="nav-button" id="prevBtn" onclick="previousQuestion()" disabled>
+                        <i class="fas fa-arrow-left me-2"></i>Previous
+                    </button>
+                    <button class="nav-button" id="nextBtn" onclick="nextQuestion()" disabled>
+                        Next<i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results -->
+            <div id="resultsContainer" class="results-container">
+                <!-- Results will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // CUSTOMIZE THIS SECTION FOR YOUR QUIZ!
+        // ========================================
+
+        // Quiz Configuration
+        const quizConfig = {
+            title: "How Much of a Pirate Are You?",
+            icon: "🏴‍☠️",
+            // Each answer has a score value - higher scores = more pirate-like!
+            questions: [
+                {
+                    question: "What's your favorite drink?",
+                    answers: [
+                        { text: "Rum, obviously", icon: "🥃", score: 10 },
+                        { text: "Coffee (black as the sea)", icon: "☕", score: 5 },
+                        { text: "Fancy cocktails", icon: "🍹", score: 3 },
+                        { text: "Just water", icon: "💧", score: 0 }
+                    ]
+                },
+                {
+                    question: "Pick your ideal vacation:",
+                    answers: [
+                        { text: "Sailing the Caribbean", icon: "⛵", score: 10 },
+                        { text: "Beach resort", icon: "🏖️", score: 5 },
+                        { text: "Mountain hiking", icon: "🏔️", score: 2 },
+                        { text: "Staycation", icon: "🏠", score: 0 }
+                    ]
+                },
+                {
+                    question: "Your preferred pet?",
+                    answers: [
+                        { text: "A parrot, matey!", icon: "🦜", score: 10 },
+                        { text: "A loyal dog", icon: "🐕", score: 5 },
+                        { text: "A mysterious cat", icon: "🐈", score: 3 },
+                        { text: "No pets for me", icon: "🚫", score: 0 }
+                    ]
+                },
+                {
+                    question: "How do you handle conflicts?",
+                    answers: [
+                        { text: "Sword fight at dawn!", icon: "⚔️", score: 10 },
+                        { text: "Negotiate aggressively", icon: "🤝", score: 7 },
+                        { text: "Talk it out calmly", icon: "💬", score: 3 },
+                        { text: "Avoid at all costs", icon: "🏃", score: 0 }
+                    ]
+                },
+                {
+                    question: "Your ideal treasure?",
+                    answers: [
+                        { text: "Gold doubloons!", icon: "🪙", score: 10 },
+                        { text: "Cryptocurrency", icon: "₿", score: 5 },
+                        { text: "Knowledge", icon: "📚", score: 3 },
+                        { text: "Peace and quiet", icon: "🧘", score: 0 }
+                    ]
+                },
+                {
+                    question: "Favorite type of music?",
+                    answers: [
+                        { text: "Sea shanties", icon: "🎵", score: 10 },
+                        { text: "Rock/Metal", icon: "🎸", score: 6 },
+                        { text: "Classical", icon: "🎻", score: 2 },
+                        { text: "Silence", icon: "🔇", score: 0 }
+                    ]
+                },
+                {
+                    question: "Your leadership style?",
+                    answers: [
+                        { text: "Fear and respect", icon: "💀", score: 10 },
+                        { text: "Democratic but firm", icon: "⚖️", score: 5 },
+                        { text: "Collaborative", icon: "🤲", score: 3 },
+                        { text: "I don't lead", icon: "🙈", score: 0 }
+                    ]
+                },
+                {
+                    question: "Favorite weather?",
+                    answers: [
+                        { text: "Stormy seas", icon: "⛈️", score: 10 },
+                        { text: "Windy day", icon: "💨", score: 7 },
+                        { text: "Sunny and calm", icon: "☀️", score: 3 },
+                        { text: "Indoor weather", icon: "🏠", score: 0 }
+                    ]
+                },
+                {
+                    question: "Your motto?",
+                    answers: [
+                        { text: "Dead men tell no tales", icon: "💀", score: 10 },
+                        { text: "Fortune favors the bold", icon: "🎯", score: 7 },
+                        { text: "Live and let live", icon: "✌️", score: 3 },
+                        { text: "Safety first", icon: "🦺", score: 0 }
+                    ]
+                },
+                {
+                    question: "Ideal mode of transportation?",
+                    answers: [
+                        { text: "A mighty ship", icon: "🚢", score: 10 },
+                        { text: "Motorcycle", icon: "🏍️", score: 6 },
+                        { text: "Electric car", icon: "🚗", score: 2 },
+                        { text: "Public transit", icon: "🚌", score: 0 }
+                    ]
+                }
+            ],
+            // Result ranges - customize these based on your scoring!
+            results: [
+                {
+                    minScore: 80,
+                    maxScore: 100,
+                    title: "You're 100% Pirate! 🏴‍☠️",
+                    description: "Ahoy! You're a true pirate through and through. The seven seas call your name, and you answer with a hearty 'ARRR!' Your crew would follow you to the edge of the map.",
+                    icon: "🏴‍☠️"
+                },
+                {
+                    minScore: 50,
+                    maxScore: 79,
+                    title: "Part-Time Pirate ⚓",
+                    description: "You've got a pirate's heart, but you also enjoy the comforts of land. You're the type who'd sail on weekends but keep a day job. A practical pirate!",
+                    icon: "⚓"
+                },
+                {
+                    minScore: 20,
+                    maxScore: 49,
+                    title: "Landlubber with Dreams 🏝️",
+                    description: "You admire pirates from afar but prefer your adventures to be a bit more... safe. Maybe start with a boat rental?",
+                    icon: "🏝️"
+                },
+                {
+                    minScore: 0,
+                    maxScore: 19,
+                    title: "Definitely Not a Pirate 🏢",
+                    description: "The pirate life is not for you, and that's okay! You prefer stability, safety, and probably have excellent credit. Pirates need accountants too!",
+                    icon: "🏢"
+                }
+            ]
+        };
+
+        // ========================================
+        // QUIZ LOGIC - You probably don't need to change this!
+        // ========================================
+
+        let currentQuestion = 0;
+        let answers = [];
+
+        function startQuiz() {
+            document.getElementById('startScreen').style.display = 'none';
+            document.getElementById('quizContent').style.display = 'block';
+            renderQuestion();
+            updateProgressBar();
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById('questionsContainer');
+            const question = quizConfig.questions[currentQuestion];
+            
+            container.innerHTML = `
+                <div class="question-container active">
+                    <div class="question-number">${currentQuestion + 1}</div>
+                    <h2 class="question-text">${question.question}</h2>
+                    <div class="answers-list">
+                        ${question.answers.map((answer, index) => `
+                            <div class="answer-option" onclick="selectAnswer(${index})" data-index="${index}">
+                                <span class="answer-icon">${answer.icon}</span>
+                                <span>${answer.text}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Restore selected answer if going back
+            if (answers[currentQuestion] !== undefined) {
+                document.querySelector(`[data-index="${answers[currentQuestion]}"]`).classList.add('selected');
+            }
+
+            updateButtons();
+        }
+
+        function selectAnswer(answerIndex) {
+            // Store the answer
+            answers[currentQuestion] = answerIndex;
+            
+            // Update UI
+            document.querySelectorAll('.answer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-index="${answerIndex}"]`).classList.add('selected');
+            
+            // Enable next button
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizConfig.questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+                updateProgressBar();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+                updateProgressBar();
+            }
+        }
+
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentQuestion === 0;
+            document.getElementById('nextBtn').disabled = answers[currentQuestion] === undefined;
+            
+            // Change next button to submit on last question
+            const nextBtn = document.getElementById('nextBtn');
+            if (currentQuestion === quizConfig.questions.length - 1) {
+                nextBtn.innerHTML = 'See Results<i class="fas fa-flag-checkered ms-2"></i>';
+            } else {
+                nextBtn.innerHTML = 'Next<i class="fas fa-arrow-right ms-2"></i>';
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestion + 1) / quizConfig.questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+
+        function calculateScore() {
+            let totalScore = 0;
+            answers.forEach((answerIndex, questionIndex) => {
+                totalScore += quizConfig.questions[questionIndex].answers[answerIndex].score;
+            });
+            return totalScore;
+        }
+
+        function showResults() {
+            const score = calculateScore();
+            const maxPossibleScore = quizConfig.questions.length * 10; // Assuming max 10 points per question
+            const percentage = Math.round((score / maxPossibleScore) * 100);
+            
+            // Find appropriate result
+            const result = quizConfig.results.find(r => 
+                percentage >= r.minScore && percentage <= r.maxScore
+            );
+            
+            // Hide quiz content
+            document.getElementById('quizContent').style.display = 'none';
+            
+            // Show results
+            const resultsContainer = document.getElementById('resultsContainer');
+            resultsContainer.classList.add('active');
+            resultsContainer.innerHTML = `
+                <div class="result-icon">${result.icon}</div>
+                <div class="score-display">${percentage}%</div>
+                <h2 class="result-title">${result.title}</h2>
+                <p class="result-description">${result.description}</p>
+                <button class="restart-button" onclick="restartQuiz()">
+                    <i class="fas fa-redo me-2"></i>Take Quiz Again
+                </button>
+            `;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = [];
+            document.getElementById('resultsContainer').classList.remove('active');
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('startScreen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
