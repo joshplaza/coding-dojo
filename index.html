@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Dojo - Team Activity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6366F1;
+            --secondary-color: #8B5CF6;
+            --accent-color: #EC4899;
+            --dark-bg: #1F2937;
+            --light-bg: #F3F4F6;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--light-bg);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .content-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .activity-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge-custom {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+        }
+
+        .problem-card {
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: #F9FAFB;
+            border-radius: 4px;
+        }
+
+        .nav-pills .nav-link {
+            color: var(--dark-bg);
+            border-radius: 8px;
+            margin: 0 0.25rem;
+        }
+
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+        }
+
+        .footer {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 5rem;
+        }
+
+        .tip-bubble {
+            background-color: #DBEAFE;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0;
+            position: relative;
+        }
+
+        .tip-bubble:before {
+            content: "💡";
+            position: absolute;
+            left: -0.5rem;
+            top: 0.5rem;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-code me-2"></i>Coding Dojo
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#overview">What's This?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#problems">Challenge Ideas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#setup">Let's Go!</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Coding Dojo</h1>
+            <p class="lead mb-4">
+                90 minutes of fun mini-projects, optional show & tell, zero judgment
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <span class="badge bg-white text-primary badge-custom">
+                            <i class="fas fa-users me-2"></i>2-12 Players
+                        </span>
+                        <span class="badge bg-white text-primary badge-custom">
+                            <i class="fas fa-clock me-2"></i>90 Minutes Total
+                        </span>
+                        <span class="badge bg-white text-primary badge-custom">
+                            <i class="fas fa-dice me-2"></i>All Skill Levels
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container" id="overview">
+        <div class="content-card">
+            <h2 class="mb-4">
+                <i class="fas fa-sparkles text-primary me-2"></i>The Goal
+            </h2>
+            <p class="lead">
+                Let's spend some time building fun stuff and getting to know each other through code.
+            </p>
+            <p>
+                Here's the plan: We'll do short 10-15 minute rounds where you build something silly, 
+                experimental, or just plain fun. After each round, anyone who wants to can show what they made. 
+                No pressure to present - watching is totally fine too.
+            </p>
+            <p>
+                The rules? There are no rules. Use AI if you want. Try that new framework you've been curious about. 
+                Build something ridiculous. Make it pretty, make it ugly, make it weird. This is your playground to 
+                experiment without worrying about code reviews or best practices. Let's see what happens when we just 
+                have fun with code.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-card">
+            <h2 class="mb-4">
+                <i class="fas fa-rocket text-primary me-2"></i>How It Works
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <h5>1. Code Something (10-15 mins)</h5>
+                    <p>Pick an idea and go wild. Quick and dirty? Over-engineered? Your call.</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h5>2. Show & Tell (Optional)</h5>
+                    <p>Show what you built if you want. Or just enjoy seeing what others made.</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h5>3. Rinse & Repeat</h5>
+                    <p>We'll do several rounds. Try different challenges, different approaches, different tools.</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <h5>4. Anything Goes</h5>
+                    <p>AI? Sure. New framework? Go for it. Vanilla JS? Classic. Just have fun with it.</p>
+                </div>
+            </div>
+
+            <div class="tip-bubble mt-4">
+                <strong>Remember:</strong> This isn't about perfect code. It's about having fun and maybe learning something new from each other.
+            </div>
+        </div>
+
+        <div class="content-card">
+            <h3 class="mb-3">
+                <i class="fas fa-clock text-primary me-2"></i>How We'll Spend 90 Minutes
+            </h3>
+            <p>We'll do about 5-6 mini rounds over 90 minutes:</p>
+            <ul>
+                <li><strong>10-15 minutes:</strong> Code something fun</li>
+                <li><strong>5 minutes:</strong> Optional show & tell (or just watch)</li>
+                <li><strong>Repeat!</strong> Try a new challenge or iterate on your last one</li>
+            </ul>
+            <p class="text-muted mb-0">
+                <em>Tip: First round is usually the hardest. By round 3, everyone's in the zone.</em>
+            </p>
+        </div>
+    </div>
+
+    <div class="container" id="problems">
+        <div class="content-card">
+            <h2 class="mb-4">
+                <i class="fas fa-lightbulb text-primary me-2"></i>Ideas for Your 10-15 Minutes
+            </h2>
+            <p class="lead mb-4">
+                Build anything in 10-15 minutes! The best projects are the ones that let you share a bit about yourself.
+            </p>
+
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h5 class="text-primary mb-3">
+                        <i class="fas fa-heart me-2"></i>Personal & Fun
+                    </h5>
+                    <div class="problem-card">
+                        <strong>Something About You</strong>
+                        <p class="mb-0">Pet photo gallery? Favorite recipe converter? Hobby tracker? Build something that shows who you are!</p>
+                    </div>
+                    <div class="problem-card">
+                        <strong>Mini Photo Story</strong>
+                        <p class="mb-0">Quick slideshow of your weekend, your desk setup, or your coffee collection. Add captions!</p>
+                    </div>
+                    <div class="problem-card">
+                        <strong>Playlist Generator</strong>
+                        <p class="mb-0">Generate playlists based on mood, weather, or inside jokes. Share your music taste!</p>
+                    </div>
+                    <div class="problem-card">
+                        <strong>Personal Dashboard</strong>
+                        <p class="mb-0">Track something quirky about yourself - coffee count, dad jokes told, bugs squashed.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <h5 class="text-success mb-3">
+                        <i class="fas fa-code me-2"></i>Quick Code Challenges
+                    </h5>
+                    <div class="problem-card">
+                        <strong>Bad UI Battles</strong>
+                        <p class="mb-0">Make the worst form ever! <a href="activities/worst-ui-challenge.html" target="_blank">See example</a></p>
+                    </div>
+                    <div class="problem-card">
+                        <strong>Emoji Translator</strong>
+                        <p class="mb-0">Convert text to emojis or vice versa. How would you emoji-fy your job title?</p>
+                    </div>
+                    <div class="problem-card">
+                        <strong>Random Generator</strong>
+                        <p class="mb-0">Team name generator? Excuse maker? Meeting bingo? Make us laugh!</p>
+                    </div>
+                    <div class="problem-card">
+                        <strong>Quick Game</strong>
+                        <p class="mb-0">Speed typing test with team inside jokes? Memory game with coworker faces?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info mt-3">
+                <h6 class="alert-heading mb-2">
+                    <i class="fas fa-magic me-2"></i>Or Build Whatever You Want!
+                </h6>
+                <p class="mb-2">These are just ideas. The best projects are often the unexpected ones:</p>
+                <ul class="mb-2">
+                    <li>That tool you've always wanted at work</li>
+                    <li>Something related to your hobbies or interests</li>
+                    <li>A joke that only your team would understand</li>
+                    <li>An experiment with that framework you've been curious about</li>
+                </ul>
+                <p class="mb-0"><strong>Remember:</strong> Use AI, don't use AI, use any language or tool - whatever helps you build something fun in 15 minutes!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="setup">
+        <div class="content-card">
+            <h2 class="mb-4">
+                <i class="fas fa-flag-checkered text-primary me-2"></i>Ready to Roll?
+            </h2>
+            
+            <h5 class="mb-3">Quick Setup Checklist</h5>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="check1">
+                <label class="form-check-label" for="check1">
+                    Pick something fun to build (or make up your own)
+                </label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="check2">
+                <label class="form-check-label" for="check2">
+                    Open your editor of choice
+                </label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="check3">
+                <label class="form-check-label" for="check3">
+                    Remember: quick & fun beats perfect
+                </label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="check4">
+                <label class="form-check-label" for="check4">
+                    Optional sharing means no pressure
+                </label>
+            </div>
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="check5">
+                <label class="form-check-label" for="check5">
+                    Ready to see what everyone builds
+                </label>
+            </div>
+
+            
+            <div class="mt-4 p-4 bg-light rounded">
+                <h5>Why This Format Works</h5>
+                <ul class="mb-0">
+                    <li>Short sprints = less pressure to be perfect</li>
+                    <li>Optional sharing = participate at your comfort level</li>
+                    <li>Fun challenges = actually enjoyable team time</li>
+                    <li>Anything goes = experiment without judgment</li>
+                    <li>See different approaches = learn from each other naturally</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="text-center bg-primary text-white rounded-4 p-5">
+            <h2 class="mb-4">Let's Do This!</h2>
+            <p class="lead mb-4">
+                90 minutes of coding fun starts now. Remember: sharing is optional, fun is mandatory.
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <button class="btn btn-light btn-lg" onclick="window.print()">
+                    <i class="fas fa-print me-2"></i>Print This Guide
+                </button>
+            </div>
+            <p class="mt-3 mb-0 text-white-50">
+First round starts in 5 minutes. Pick something fun and let's go!
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="text-center">
+                <h5 class="mb-3">Have Fun!</h5>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    this.parentElement.style.opacity = '0.6';
+                    this.parentElement.style.textDecoration = 'line-through';
+                } else {
+                    this.parentElement.style.opacity = '1';
+                    this.parentElement.style.textDecoration = 'none';
+                }
+            });
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
