@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Builder Template - Coding Dojo</title>
+    <title>D&D Class Picker - Coding Dojo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             /* CUSTOMIZE THESE COLORS FOR YOUR THEME! */
-            --primary-color: #3B82F6;
-            --secondary-color: #8B5CF6;
-            --accent-color: #EC4899;
-            --dark-bg: #1F2937;
-            --light-bg: #F3F4F6;
+            --primary-color: #8B4513;
+            --secondary-color: #DAA520;
+            --accent-color: #DC143C;
+            --dark-bg: #1a1a1a;
+            --light-bg: #F5E6D3;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Georgia', 'Times New Roman', serif;
             background-color: var(--light-bg);
             min-height: 100vh;
             padding: 20px 0;
+            background-image: url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 100 0 L 0 0 0 100" fill="none" stroke="%23e0d0b0" stroke-width="1" opacity="0.3"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100" height="100" fill="url(%23grid)" /%3E%3C/svg%3E');
         }
 
         .quiz-container {
@@ -258,17 +259,17 @@
             <div id="startScreen" class="start-screen">
                 <div class="quiz-header">
                     <!-- CUSTOMIZE: Change this icon to match your theme! -->
-                    <div class="quiz-icon">🏴‍☠️</div>
+                    <div class="quiz-icon">🎲</div>
                     
                     <!-- CUSTOMIZE: Change your quiz title -->
-                    <h1 class="quiz-title">How Much of a Pirate Are You?</h1>
+                    <h1 class="quiz-title">Discover Your D&D Class</h1>
                     
                     <!-- CUSTOMIZE: Change your quiz description -->
-                    <p class="lead">Answer 10 questions to discover your true pirate percentage! Arrr!</p>
+                    <p class="lead">Answer 10 questions to reveal which Dungeons & Dragons class matches your personality!</p>
                 </div>
                 
                 <button class="start-button" onclick="startQuiz()">
-                    <i class="fas fa-anchor me-2"></i>Start the Quiz!
+                    <i class="fas fa-dice-d20 me-2"></i>Start the Quest!
                 </button>
             </div>
 
@@ -307,130 +308,180 @@
 
         // Quiz Configuration
         const quizConfig = {
-            title: "How Much of a Pirate Are You?",
-            icon: "🏴‍☠️",
-            // Each answer has a score value - higher scores = more pirate-like!
+            title: "Discover Your D&D Class",
+            icon: "🎲",
+            // Each answer maps to different D&D classes with weighted scores
             questions: [
                 {
-                    question: "What's your favorite drink?",
+                    question: "How do you approach a dangerous situation?",
                     answers: [
-                        { text: "Rum, obviously", icon: "🥃", score: 10 },
-                        { text: "Coffee (black as the sea)", icon: "☕", score: 5 },
-                        { text: "Fancy cocktails", icon: "🍹", score: 3 },
-                        { text: "Just water", icon: "💧", score: 0 }
+                        { text: "Charge in with sword drawn!", icon: "⚔️", fighter: 10, barbarian: 8, paladin: 6 },
+                        { text: "Study it carefully first", icon: "🔍", wizard: 10, warlock: 6, artificer: 8 },
+                        { text: "Sneak around unseen", icon: "🥷", rogue: 10, ranger: 6, monk: 4 },
+                        { text: "Rally my allies", icon: "📯", bard: 10, cleric: 8, paladin: 6 }
                     ]
                 },
                 {
-                    question: "Pick your ideal vacation:",
+                    question: "Your source of power comes from:",
                     answers: [
-                        { text: "Sailing the Caribbean", icon: "⛵", score: 10 },
-                        { text: "Beach resort", icon: "🏖️", score: 5 },
-                        { text: "Mountain hiking", icon: "🏔️", score: 2 },
-                        { text: "Staycation", icon: "🏠", score: 0 }
+                        { text: "Years of training", icon: "💪", fighter: 10, monk: 8, rogue: 6 },
+                        { text: "Divine blessing", icon: "✨", cleric: 10, paladin: 8, druid: 4 },
+                        { text: "Ancient knowledge", icon: "📚", wizard: 10, artificer: 8, warlock: 4 },
+                        { text: "Raw emotion", icon: "🔥", barbarian: 10, sorcerer: 8, bard: 6 }
                     ]
                 },
                 {
-                    question: "Your preferred pet?",
+                    question: "In a party, you prefer to be:",
                     answers: [
-                        { text: "A parrot, matey!", icon: "🦜", score: 10 },
-                        { text: "A loyal dog", icon: "🐕", score: 5 },
-                        { text: "A mysterious cat", icon: "🐈", score: 3 },
-                        { text: "No pets for me", icon: "🚫", score: 0 }
+                        { text: "The shield protecting others", icon: "🛡️", paladin: 10, fighter: 8, cleric: 6 },
+                        { text: "The devastating damage dealer", icon: "💥", barbarian: 10, sorcerer: 8, warlock: 6 },
+                        { text: "The clever problem solver", icon: "🧩", wizard: 10, artificer: 8, rogue: 6 },
+                        { text: "The versatile support", icon: "🎭", bard: 10, druid: 8, ranger: 6 }
                     ]
                 },
                 {
-                    question: "How do you handle conflicts?",
+                    question: "Your ideal companion would be:",
                     answers: [
-                        { text: "Sword fight at dawn!", icon: "⚔️", score: 10 },
-                        { text: "Negotiate aggressively", icon: "🤝", score: 7 },
-                        { text: "Talk it out calmly", icon: "💬", score: 3 },
-                        { text: "Avoid at all costs", icon: "🏃", score: 0 }
+                        { text: "A loyal animal friend", icon: "🐺", ranger: 10, druid: 8, barbarian: 4 },
+                        { text: "A magical familiar", icon: "🦉", wizard: 10, warlock: 8, artificer: 6 },
+                        { text: "My trusty weapon", icon: "🗡️", fighter: 10, barbarian: 8, monk: 6 },
+                        { text: "My faith/ideals", icon: "⭐", paladin: 10, cleric: 8, monk: 6 }
                     ]
                 },
                 {
-                    question: "Your ideal treasure?",
+                    question: "Your fighting style involves:",
                     answers: [
-                        { text: "Gold doubloons!", icon: "🪙", score: 10 },
-                        { text: "Cryptocurrency", icon: "₿", score: 5 },
-                        { text: "Knowledge", icon: "📚", score: 3 },
-                        { text: "Peace and quiet", icon: "🧘", score: 0 }
+                        { text: "Precise strikes and tactics", icon: "🎯", fighter: 10, monk: 8, rogue: 8 },
+                        { text: "Overwhelming magical force", icon: "⚡", sorcerer: 10, wizard: 8, warlock: 8 },
+                        { text: "Hit and run tactics", icon: "💨", rogue: 10, ranger: 8, monk: 6 },
+                        { text: "Inspiring allies while fighting", icon: "🎺", bard: 10, paladin: 8, cleric: 6 }
                     ]
                 },
                 {
-                    question: "Favorite type of music?",
+                    question: "You draw your strength from:",
                     answers: [
-                        { text: "Sea shanties", icon: "🎵", score: 10 },
-                        { text: "Rock/Metal", icon: "🎸", score: 6 },
-                        { text: "Classical", icon: "🎻", score: 2 },
-                        { text: "Silence", icon: "🔇", score: 0 }
+                        { text: "Inner discipline", icon: "🧘", monk: 10, fighter: 6, wizard: 6 },
+                        { text: "Primal fury", icon: "🐻", barbarian: 10, druid: 8, ranger: 4 },
+                        { text: "Dark pacts", icon: "📜", warlock: 10, rogue: 6, sorcerer: 4 },
+                        { text: "Sacred oaths", icon: "⚖️", paladin: 10, cleric: 8, druid: 4 }
                     ]
                 },
                 {
-                    question: "Your leadership style?",
+                    question: "Your ideal adventure involves:",
                     answers: [
-                        { text: "Fear and respect", icon: "💀", score: 10 },
-                        { text: "Democratic but firm", icon: "⚖️", score: 5 },
-                        { text: "Collaborative", icon: "🤲", score: 3 },
-                        { text: "I don't lead", icon: "🙈", score: 0 }
+                        { text: "Ancient ruins and mysteries", icon: "🏛️", wizard: 10, artificer: 8, warlock: 6 },
+                        { text: "Wilderness exploration", icon: "🌲", ranger: 10, druid: 8, barbarian: 6 },
+                        { text: "Urban intrigue", icon: "🏙️", rogue: 10, bard: 8, warlock: 6 },
+                        { text: "Holy quests", icon: "⛪", paladin: 10, cleric: 8, monk: 4 }
                     ]
                 },
                 {
-                    question: "Favorite weather?",
+                    question: "In your downtime, you prefer:",
                     answers: [
-                        { text: "Stormy seas", icon: "⛈️", score: 10 },
-                        { text: "Windy day", icon: "💨", score: 7 },
-                        { text: "Sunny and calm", icon: "☀️", score: 3 },
-                        { text: "Indoor weather", icon: "🏠", score: 0 }
+                        { text: "Studying ancient tomes", icon: "📖", wizard: 10, cleric: 6, artificer: 8 },
+                        { text: "Training your body", icon: "🏋️", fighter: 10, monk: 8, barbarian: 8 },
+                        { text: "Performing for crowds", icon: "🎪", bard: 10, rogue: 6, sorcerer: 4 },
+                        { text: "Communing with nature", icon: "🌿", druid: 10, ranger: 8, barbarian: 4 }
                     ]
                 },
                 {
-                    question: "Your motto?",
+                    question: "Your greatest asset is your:",
                     answers: [
-                        { text: "Dead men tell no tales", icon: "💀", score: 10 },
-                        { text: "Fortune favors the bold", icon: "🎯", score: 7 },
-                        { text: "Live and let live", icon: "✌️", score: 3 },
-                        { text: "Safety first", icon: "🦺", score: 0 }
+                        { text: "Unshakeable willpower", icon: "💎", paladin: 10, monk: 8, barbarian: 6 },
+                        { text: "Sharp intellect", icon: "🧠", wizard: 10, artificer: 8, rogue: 6 },
+                        { text: "Natural charisma", icon: "✨", bard: 10, sorcerer: 8, warlock: 6 },
+                        { text: "Battle-hardened reflexes", icon: "⚡", fighter: 10, ranger: 8, rogue: 8 }
                     ]
                 },
                 {
-                    question: "Ideal mode of transportation?",
+                    question: "When facing impossible odds, you:",
                     answers: [
-                        { text: "A mighty ship", icon: "🚢", score: 10 },
-                        { text: "Motorcycle", icon: "🏍️", score: 6 },
-                        { text: "Electric car", icon: "🚗", score: 2 },
-                        { text: "Public transit", icon: "🚌", score: 0 }
+                        { text: "Trust in higher powers", icon: "🙏", cleric: 10, paladin: 8, druid: 6 },
+                        { text: "Rely on clever tricks", icon: "🎩", rogue: 10, bard: 8, artificer: 6 },
+                        { text: "Unleash raw power", icon: "🌋", sorcerer: 10, barbarian: 8, warlock: 8 },
+                        { text: "Use superior tactics", icon: "♟️", fighter: 10, wizard: 8, ranger: 6 }
                     ]
                 }
             ],
             // Result ranges - customize these based on your scoring!
             results: [
                 {
-                    minScore: 80,
-                    maxScore: 100,
-                    title: "You're 100% Pirate! 🏴‍☠️",
-                    description: "Ahoy! You're a true pirate through and through. The seven seas call your name, and you answer with a hearty 'ARRR!' Your crew would follow you to the edge of the map.",
-                    icon: "🏴‍☠️"
+                    class: "fighter",
+                    title: "Fighter - Master of Arms",
+                    description: "You are a Fighter! Masters of martial combat, fighters are versatile warriors who excel with weapons and armor. Your dedication to the art of war makes you a formidable opponent and reliable ally.",
+                    icon: "⚔️"
                 },
                 {
-                    minScore: 50,
-                    maxScore: 79,
-                    title: "Part-Time Pirate ⚓",
-                    description: "You've got a pirate's heart, but you also enjoy the comforts of land. You're the type who'd sail on weekends but keep a day job. A practical pirate!",
-                    icon: "⚓"
+                    class: "wizard",
+                    title: "Wizard - Arcane Scholar",
+                    description: "You are a Wizard! Through years of study, you've mastered the arcane arts. Your spellbook is your greatest treasure, filled with powerful magic to shape reality itself.",
+                    icon: "🧙"
                 },
                 {
-                    minScore: 20,
-                    maxScore: 49,
-                    title: "Landlubber with Dreams 🏝️",
-                    description: "You admire pirates from afar but prefer your adventures to be a bit more... safe. Maybe start with a boat rental?",
-                    icon: "🏝️"
+                    class: "rogue",
+                    title: "Rogue - Shadow Dancer",
+                    description: "You are a Rogue! Quick, clever, and deadly, you excel at what others can't or won't do. Whether it's stealth, lockpicking, or a blade in the dark, you get the job done.",
+                    icon: "🗡️"
                 },
                 {
-                    minScore: 0,
-                    maxScore: 19,
-                    title: "Definitely Not a Pirate 🏢",
-                    description: "The pirate life is not for you, and that's okay! You prefer stability, safety, and probably have excellent credit. Pirates need accountants too!",
-                    icon: "🏢"
+                    class: "cleric",
+                    title: "Cleric - Divine Conduit",
+                    description: "You are a Cleric! Blessed by the gods, you channel divine power to heal allies and smite foes. Your faith is your strength, and miracles follow in your wake.",
+                    icon: "⛪"
+                },
+                {
+                    class: "barbarian",
+                    title: "Barbarian - Primal Warrior",
+                    description: "You are a Barbarian! Raw fury and primal instinct drive you in battle. When rage takes hold, you become an unstoppable force of destruction.",
+                    icon: "🪓"
+                },
+                {
+                    class: "bard",
+                    title: "Bard - Master of Tales",
+                    description: "You are a Bard! Your words and music hold magic, inspiring allies and confounding enemies. A jack-of-all-trades, you bring versatility and charm to any party.",
+                    icon: "🎵"
+                },
+                {
+                    class: "paladin",
+                    title: "Paladin - Holy Warrior",
+                    description: "You are a Paladin! Bound by sacred oaths, you combine martial prowess with divine magic. You stand as a beacon of hope against the darkness.",
+                    icon: "🛡️"
+                },
+                {
+                    class: "ranger",
+                    title: "Ranger - Wilderness Guardian",
+                    description: "You are a Ranger! At home in the wild, you're a skilled tracker and hunter. Your connection to nature and prowess with bow and blade make you a formidable scout.",
+                    icon: "🏹"
+                },
+                {
+                    class: "sorcerer",
+                    title: "Sorcerer - Born of Magic",
+                    description: "You are a Sorcerer! Magic flows through your very blood. Unlike wizards who study, your power is innate, wild, and incredibly potent.",
+                    icon: "🔮"
+                },
+                {
+                    class: "warlock",
+                    title: "Warlock - Pact Maker",
+                    description: "You are a Warlock! You've made a pact with an otherworldly being for power. Your eldritch abilities set you apart, marking you as one who walks between worlds.",
+                    icon: "👁️"
+                },
+                {
+                    class: "druid",
+                    title: "Druid - Nature's Voice",
+                    description: "You are a Druid! You embody nature's power, shapeshifting and commanding the elements. The natural world bends to your will as you protect the balance.",
+                    icon: "🌿"
+                },
+                {
+                    class: "monk",
+                    title: "Monk - Enlightened Warrior",
+                    description: "You are a Monk! Through meditation and training, you've unlocked your body's hidden potential. Your fists are as deadly as any sword, your spirit unbreakable.",
+                    icon: "🥋"
+                },
+                {
+                    class: "artificer",
+                    title: "Artificer - Magical Inventor",
+                    description: "You are an Artificer! You blend magic and science, creating wonderful inventions. Your ingenuity and craftsmanship make the impossible possible.",
+                    icon: "⚙️"
                 }
             ]
         };
@@ -527,22 +578,42 @@
         }
 
         function calculateScore() {
-            let totalScore = 0;
+            // Calculate scores for each class
+            const classScores = {
+                fighter: 0, wizard: 0, rogue: 0, cleric: 0,
+                barbarian: 0, bard: 0, paladin: 0, ranger: 0,
+                sorcerer: 0, warlock: 0, druid: 0, monk: 0,
+                artificer: 0
+            };
+            
             answers.forEach((answerIndex, questionIndex) => {
-                totalScore += quizConfig.questions[questionIndex].answers[answerIndex].score;
+                const answer = quizConfig.questions[questionIndex].answers[answerIndex];
+                // Add scores for each class mentioned in the answer
+                Object.keys(classScores).forEach(className => {
+                    if (answer[className]) {
+                        classScores[className] += answer[className];
+                    }
+                });
             });
-            return totalScore;
+            
+            return classScores;
         }
 
         function showResults() {
-            const score = calculateScore();
-            const maxPossibleScore = quizConfig.questions.length * 10; // Assuming max 10 points per question
-            const percentage = Math.round((score / maxPossibleScore) * 100);
+            const classScores = calculateScore();
             
-            // Find appropriate result
-            const result = quizConfig.results.find(r => 
-                percentage >= r.minScore && percentage <= r.maxScore
-            );
+            // Find the class with the highest score
+            let topClass = '';
+            let topScore = 0;
+            Object.entries(classScores).forEach(([className, score]) => {
+                if (score > topScore) {
+                    topScore = score;
+                    topClass = className;
+                }
+            });
+            
+            // Find the corresponding result
+            const result = quizConfig.results.find(r => r.class === topClass);
             
             // Hide quiz content
             document.getElementById('quizContent').style.display = 'none';
@@ -552,7 +623,6 @@
             resultsContainer.classList.add('active');
             resultsContainer.innerHTML = `
                 <div class="result-icon">${result.icon}</div>
-                <div class="score-display">${percentage}%</div>
                 <h2 class="result-title">${result.title}</h2>
                 <p class="result-description">${result.description}</p>
                 <button class="restart-button" onclick="restartQuiz()">
